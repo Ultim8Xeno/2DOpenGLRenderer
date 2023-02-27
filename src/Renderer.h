@@ -20,6 +20,11 @@ namespace OpenGLRenderer {
 
 		// Set Background colour
 		static void ClearColour(const Vec4& colour);
+		// "Camera" Options
+		static void SetOffset(const Vec2& offset);
+		static Vec2 GetOffset();
+		static void SetScale(const Vec2& scale);
+		static Vec2 GetScale();
 
 		// Call before drawing every frame
 		static void BeginDraw();

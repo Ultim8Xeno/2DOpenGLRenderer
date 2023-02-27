@@ -11,6 +11,8 @@ namespace OpenGLRenderer {
 	std::unordered_map<uint8_t, uint8_t> Input::MouseButtons;
 	std::unordered_map<uint8_t, uint8_t> Input::MouseButtonsLast;
 	Vec2 Input::MousePos;
+	float Input::MouseScroll = 0.0f;
+	bool Input::ScrolledLastFrame = false;
 
 	void OpenGLRenderer::Input::Setup(GLFWwindow* window)
 	{
@@ -31,6 +33,11 @@ namespace OpenGLRenderer {
 				glfwGetWindowSize(window, NULL, &height);
 				Input::MousePos = Vec2(xpos, height-ypos);
 			});
+		glfwSetScrollCallback(window, [](GLFWwindow* window, double xpos, double ypos)
+			{
+				Input::MouseScroll = ypos;
+				Input::ScrolledLastFrame = true;
+			});
 	}
 
 	void Input::Update()
@@ -50,6 +57,11 @@ namespace OpenGLRenderer {
 		{
 			MouseButtonsLast[button.first] = button.second;
 		}
+		if (!ScrolledLastFrame)
+		{
+			MouseScroll = 0.0f;
+		}
+		ScrolledLastFrame = false;
 	}
 
 	uint8_t Input::GetKeyState(uint32_t key)
@@ -63,5 +75,9 @@ namespace OpenGLRenderer {
 	Vec2 Input::GetMousePos()
 	{
 		return MousePos;
+	}
+	float Input::GetMouseScroll()
+	{
+		return MouseScroll;
 	}
 }

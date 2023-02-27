@@ -23,12 +23,17 @@ namespace OpenGLRenderer {
 		static uint8_t GetMouseButtonState(uint32_t button);
 		// Get Mouse Position
 		static Vec2 GetMousePos();
+		// Get Mouse Scroll
+		static float GetMouseScroll();
 	private:
 		// Stores key and mouse button states
 		static std::unordered_map<uint32_t, uint8_t> Keys;
 		static std::unordered_map<uint8_t, uint8_t> MouseButtons;
 		// Stores mouse position
 		static Vec2 MousePos;
+		// Stores mouse scroll
+		static float MouseScroll;
+		static bool ScrolledLastFrame;
 		// Stores mouse button state from last frame, used in updating to GLFW_REPEAT
 		static std::unordered_map<uint8_t, uint8_t> MouseButtonsLast;
 	};

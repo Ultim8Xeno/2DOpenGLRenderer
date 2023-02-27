@@ -57,6 +57,10 @@ namespace OpenGLRenderer {
 		float dt = 0.0f;
 		// Used to calculate dt
 		float lastFrameTime = 0.0f;
+
+		// "Camera" pos and zoom
+		Vec2 offset = Vec2(0.0f, 0.0f);
+		Vec2 scale = Vec2(1.0f, 1.0f);
 	};
 
 	static RendererData data;
@@ -157,6 +161,26 @@ namespace OpenGLRenderer {
 	{
 		// Set background colour to colour
 		glClearColor(colour.x, colour.y, colour.z, colour.w);
+	}
+
+	void Renderer::SetOffset(const Vec2& offset)
+	{
+		data.offset = offset;
+	}
+
+	Vec2 Renderer::GetOffset()
+	{
+		return data.offset;
+	}
+
+	void Renderer::SetScale(const Vec2& scale)
+	{
+		data.scale = scale;
+	}
+
+	Vec2 Renderer::GetScale()
+	{
+		return data.scale;
 	}
 
 	void Renderer::BeginDraw()
@@ -264,6 +288,10 @@ namespace OpenGLRenderer {
 		if (rot)
 			r = sqrt(dim.x * dim.x + dim.y * dim.y) / 2;
 
+		// Apply "Camera" offset
+		pos.x += data.offset.x;
+		pos.y += data.offset.y;
+
 		for (int i = 0; i < 4; i++)
 		{
 			// Set positions of vertices
@@ -280,6 +308,9 @@ namespace OpenGLRenderer {
 				data.vertexData[data.currentQuad * 4 + i].pos[0] = pos.x + signs[2 * i] * dim.x / 2;
 				data.vertexData[data.currentQuad * 4 + i].pos[1] = pos.y + signs[2 * i + 1] * dim.y / 2;
 			}
+
+			data.vertexData[data.currentQuad * 4 + i].pos[0] *= data.scale.x;
+			data.vertexData[data.currentQuad * 4 + i].pos[1] *= data.scale.y;
 
 			// Set all vertex data
 			data.vertexData[data.currentQuad * 4 + i].pos[2] = pos.z/-100000.0f;
