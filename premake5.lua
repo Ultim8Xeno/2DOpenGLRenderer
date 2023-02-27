@@ -4,8 +4,13 @@ project "Renderer"
     cppdialect "C++17"
     staticruntime "off"
 
-    targetdir "%{wks.location}/bin/" .. outputdir .. "/%{prj.name}"
-    objdir "%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}"
+<<<<<<< HEAD
+    targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+=======
+    targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+>>>>>>> 57978ec1ee1aefe68f8ecb7bf152b1fa01fe197a
 
     files
     {
